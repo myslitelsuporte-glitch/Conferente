@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Conferente</title>
+<link rel="manifest" href="manifest.json">
 <style>
 :root{--bg:#0f1115;--card:#171a21;--line:#262b36;--txt:#e8eaed;--dim:#9aa3b2;--ac:#4f8cff}
 *{box-sizing:border-box}
@@ -47,9 +48,7 @@ function montar(){
   var c = document.getElementById("c").value.trim();
   var p = document.getElementById("p").value.trim();
   if(!c){ alert("Cole um comentário primeiro."); return null; }
-
   var hoje = new Date().toLocaleDateString("pt-BR");
-
   var t = "Hoje é " + hoje + ". Verifique este comentário: \"" + c + "\"";
   if(p){ t += " Pergunta: " + p; }
   t += " Responda em até 60 palavras. Separe o que é fato verificável do que é opinião ou relação de causa disputada.";
@@ -69,7 +68,10 @@ function abrir(onde){
   if(onde === "chatgpt"){ url = "https://chatgpt.com/?q=" + q; }
   window.open(url, "_blank");
 }
+
+var par = new URLSearchParams(location.search);
+var recebido = par.get("text") || par.get("url") || "";
+if(recebido){ document.getElementById("c").value = recebido; }
 </script>
 </body>
 </html>
-
