@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Conferente</title>
+<title>Cadê a Fonte?</title>
 <link rel="manifest" href="manifest.json">
 <style>
 :root{--bg:#0f1115;--card:#171a21;--line:#262b36;--txt:#e8eaed;--dim:#9aa3b2;--ac:#4f8cff}
@@ -17,13 +17,16 @@ textarea{min-height:120px}
 button{width:100%;margin-top:10px;padding:14px;border:0;border-radius:10px;background:var(--ac);color:#fff;font:inherit;font-weight:600;font-size:16px}
 .b2{background:#2a2f3a}
 #bug{background:#5c1a1a;color:#fff;padding:10px;font-size:13px;display:none;border-radius:8px;margin-bottom:14px}
+#link{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;font-size:12px;color:var(--dim);display:none;margin-bottom:14px;word-break:break-all}
 .dica{color:var(--dim);font-size:12px;margin-top:18px}
 </style>
 </head>
 <body>
 <div id="bug"></div>
-<h1>Conferente</h1>
+<h1>Cadê a Fonte?</h1>
 <div class="sub">Cole um comentário e escolha onde conferir.</div>
+
+<div id="link"></div>
 
 <label for="c">Comentário</label>
 <textarea id="c" placeholder="Cole aqui o comentário do TikTok ou do X"></textarea>
@@ -70,8 +73,20 @@ function abrir(onde){
 }
 
 var par = new URLSearchParams(location.search);
-var recebido = par.get("text") || par.get("url") || "";
-if(recebido){ document.getElementById("c").value = recebido; }
+var bruto = [par.get("text"), par.get("url"), par.get("title")].filter(Boolean).join(" ").trim();
+
+if(bruto){
+  var achados = bruto.match(/https?:\/\/\S+/g) || [];
+  var resto = bruto.replace(/https?:\/\/\S+/g, "").trim();
+  if(achados.length){
+    var d = document.getElementById("link");
+    d.style.display = "block";
+    d.textContent = "Link recebido (não entra na pergunta): " + achados[0];
+  }
+  document.getElementById("c").value = resto;
+  if(!resto){ document.getElementById("c").focus(); }
+}
 </script>
 </body>
 </html>
+
