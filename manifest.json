@@ -1,0 +1,18 @@
+{
+  "name": "Conferente",
+  "short_name": "Conferente",
+  "start_url": "/Conferente/",
+  "scope": "/Conferente/",
+  "display": "standalone",
+  "background_color": "#0f1115",
+  "theme_color": "#0f1115",
+  "share_target": {
+    "action": "/Conferente/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}
